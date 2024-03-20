@@ -1,1 +1,1 @@
-# Seminario-Python
+Karen Chizumi Kairiyama 18821/5
