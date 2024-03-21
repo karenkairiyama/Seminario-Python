@@ -7,7 +7,11 @@ words = ["python", "programación", "computadora", "código", "desarrollo",
 # Elegir una palabra al azar
 secret_word = random.choice(words)
 # Número máximo de intentos permitidos
-max_attempts = 10
+#max_attempts = 10
+#Cambie la variable max_attempts a max_failures para reflejar que está contando el número máximo de fallos permitidos en lugar de intentos.
+# Numero de fallos permitidos
+max_failures = 10
+
 # Lista para almacenar las letras adivinadas
 guessed_letters = []
 
@@ -20,13 +24,18 @@ word_displayed = "_" * len(secret_word)
 # Mostrarla palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
 
-for i in range(max_attempts):
+
+# Agregué un contador cant_fallos para rastrear la cantidad de fallos del jugador
+cant_fallos = 0
+#for i in range(max_attempts):
+#Modifiqué el bucle for para un bucle while True, lo que permite que el bucle se ejecute indefinidamente hasta que se cumpla una condición de salida.
+while True:
     # Pedir al jugador que ingrese una letra
     letter = input("Ingresa una letra: ").lower()
 
     #verificar que lo ingresado por el usuario sea una sola letra
 
-    if len(letter) !=1 and not letter.isalpha():
+    if len(letter) !=1 or not letter.isalpha():
         #si no es una letra valida
         print("Por favor, ingresa una sola letra valida.")
     else:
@@ -43,6 +52,8 @@ for i in range(max_attempts):
             print("¡Bien hecho! La letra está en la palabra.")
         else:
             print("Lo siento, la letra no está en la palabra.")
+            # Si falló con la letra se incrementa la cantidad de fallos
+            cant_fallos += 1
         # Mostrar la palabra parcialmente adivinada
         letters = []
         for letter in secret_word:
@@ -52,10 +63,17 @@ for i in range(max_attempts):
                 letters.append("_")
         word_displayed = "".join(letters)
         print(f"Palabra: {word_displayed}")
+
         # Verificar si se ha adivinado la palabra completa
         if word_displayed == secret_word:
             print(f"¡Felicidades! Has adivinado la palabra secreta:{secret_word}")
             break
-else:
-    print(f"¡Oh no! Has agotado tus {max_attempts} intentos.")
-    print(f"La palabra secreta era: {secret_word}")
+        elif cant_fallos == max_failures:
+            """Agregué una condición dentro del bucle while para verificar si el jugador ha alcanzado el número máximo de fallos permitidos (cant_fallos == max_failures). 
+            Si se alcanza este límite, se imprime un mensaje y se revela la palabra secreta"""
+            print(f"¡Oh no! Has agotado tus {max_failures} intentos.")
+            print(f"La palabra secreta era: {secret_word}")
+            break
+"""else:
+    print(f"¡Oh no! Has agotado tus {max_failures} intentos.")
+    print(f"La palabra secreta era: {secret_word}")"""
